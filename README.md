@@ -1,11 +1,10 @@
-# Hyperspeed
+# Tokaid Cats Travel Pass
 
-A simple collector badge that loops through every membership card of the
-Ether Cards community and calculates the value of the hyperspeed badge
-on the card, based on the number of engine nfts the wallet has.
+The TCTP is rewarding owners with bonus points based on the sequence of cats they own.
 
+Opensea: https://opensea.io/collection/tokaido-cats
 The community: https://galaxis.xyz/communities/ether-cards
-The quest wiki page: https://wiki.galaxis.xyz/docs/quests/hyperspeed
+The quest wiki page: https://wiki.galaxis.xyz/en/docs/quests/tocats
 
 # Usage
 
