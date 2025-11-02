@@ -48,7 +48,6 @@ setup(
     entry_points={"console_scripts": [
         "tokaidocats=tocats.tocats:cli"
         ]},
-    data_files=[("share/man/man6", ["man/tocats.6"])],
     zip_safe=False,
     install_requires=DEPENDENCIES,
     test_suite="tests.test_project",
