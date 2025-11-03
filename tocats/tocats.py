@@ -8,7 +8,7 @@ from decimal import *
 
 CONFIG_TEMPLATE = "config_template.toml"
 APPNAME = "tocats"
-__version__ = "0.5.4"
+__version__ = "0.5.5"
 
 STATIONS_SEQUENCE=["nihonbashi","shinagawa","kawasaki","kanagawa","hodogaya","totsuka","fujisawa","hiratsuka","oiso","odawara","hakone","mishima","numazu","hara","yoshiwara","kanbara","yui","okitsu","ejiri","fuchu","mariko","okabe","fujieda","shimada","kanaya","nissaka","kakegawa","fukuroi","mitsuke","hamamatsu","maisaka","arai","shirasuka","futagawa","yoshida","goyu","akasaka","fujikawa","okazaki","chiryu","narumi","miya","kuwana","yokkaichi","ishiyakushi","shono","kameyama","seki","sakashita","tsuchiyama","minakuchi","ishibe","kusatsu","otsu","kyoto"]
     
@@ -79,7 +79,7 @@ def calc_value(asset_list):
     extras = total - longest
     extras_points = extras*deduction
 
-    longest_points = longest/5
+    longest_points = longest/10
 
     points = longest_points - extras_points
 
