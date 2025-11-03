@@ -8,7 +8,7 @@ from decimal import *
 
 CONFIG_TEMPLATE = "config_template.toml"
 APPNAME = "tocats"
-__version__ = "0.3"
+__version__ = "0.4"
 
 STATIONS_SEQUENCE=["nihonbashi","shinagawa","kawasaki","kanagawa","hodogaya","totsuka","fujisawa","hiratsuka","oiso","odawara","hakone","mishima","numazu","hara","yoshiwara","kanbara","yui","okitsu","ejiri","fuchu","mariko","okabe","fujieda","shimada","kanaya","nissaka","kakegawa","fukuroi","mitsuke","hamamatsu","maisaka","arai","shirasuka","futagawa","yoshida","goyu","akasaka","fujikawa","okazaki","chiryu","narumi","miya","kuwana","yokkaichi","ishiyakushi","shono","kameyama","seki","sakashita","tsuchiyama","minakuchi","ishibe","kusatsu","otsu","kyoto"]
     
@@ -59,32 +59,30 @@ def calc_value(asset_list):
     total = 0   # number of total assets on the wallet
 
     for i in stats:
+        total += i
         if i==0:
             if longest < seq:
                 longest = seq
-                lextras = extras
             seq = 0
-            extras = 0
-
         else:
             seq +=1
-            extras+=i
-            total+= i
 
     if longest < seq:
         longest = seq
-        lextras = extras
 
-    # award for longest sequence.
+    # longest must be at least 5 and divisible by 5
+    if longest < 5:
+        longest = 0
+    longest = longest - longest%5
+
+    # extras is everything else
+    extras = total - longest
+
     # each 5 in sequence gets you 1 point
-    points = float(int(longest/5))
+    points = longest/5
 
-    # deduce points for extras.
     # deducing 0.2 point for each extras
-    points = points - (0.02*(lextras-longest))
-
-    # deduce points for cards not in the sequence
-    points = points - (0.01*(total-lextras))
+    points = points - (0.02*extras)
 
     # we could be below zero...
     if points < 0:
@@ -99,10 +97,8 @@ def calc_value(asset_list):
     
     # for testing
     print(stats)
-    if longest >= 5:
-        print("SCORER")
     print("total:",total)
-    print("extras:",lextras)
+    print("extras:",extras)
     print("longest:",longest)
     print("points:",points)
     print("--------------------")
