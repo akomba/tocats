@@ -8,7 +8,7 @@ from decimal import *
 
 CONFIG_TEMPLATE = "config_template.toml"
 APPNAME = "tocats"
-__version__ = "0.5"
+__version__ = "0.5.4"
 
 STATIONS_SEQUENCE=["nihonbashi","shinagawa","kawasaki","kanagawa","hodogaya","totsuka","fujisawa","hiratsuka","oiso","odawara","hakone","mishima","numazu","hara","yoshiwara","kanbara","yui","okitsu","ejiri","fuchu","mariko","okabe","fujieda","shimada","kanaya","nissaka","kakegawa","fukuroi","mitsuke","hamamatsu","maisaka","arai","shirasuka","futagawa","yoshida","goyu","akasaka","fujikawa","okazaki","chiryu","narumi","miya","kuwana","yokkaichi","ishiyakushi","shono","kameyama","seki","sakashita","tsuchiyama","minakuchi","ishibe","kusatsu","otsu","kyoto"]
     
@@ -31,10 +31,7 @@ def main(community_name):
     glx.apphelper.appupdate(calc_value,APPNAME,config,"tokaido-cats",community_name) 
 
 def calc_value(asset_list):
-
-
     mothership = Mothership()
-
     pdict = mothership.project_dict("tokaido-cats") 
 
     assets = []
@@ -75,14 +72,16 @@ def calc_value(asset_list):
         longest = 0
     longest = longest - longest%5
 
+
+    deduction = 0.02
+
     # extras is everything else
     extras = total - longest
+    extras_points = extras*deduction
 
-    # each 5 in sequence gets you 1 point
-    points = longest*20
+    longest_points = longest/5
 
-    # deducing 0.2 point for each extras
-    points = points - (0.4*extras)
+    points = longest_points - extras_points
 
     # we could be below zero...
     if points < 0:
@@ -90,17 +89,17 @@ def calc_value(asset_list):
 
     # consolidation price 
     # if the wallet has at least one tocat
-    if points < 10 and total > 0:
-        points = 10
+    if points < 0.1 and total > 0:
+        points = 0.1
 
-    points = int(points/100)
+    points = float(int(points*100))/100
 
     # for testing
     print("version:",__version__)
     print(stats)
     print("total:",total)
-    print("extras:",extras)
-    print("longest:",longest)
+    print("extras:",extras,": -"+str(extras_points),"points")
+    print("longest:",longest,": ",str(longest_points),"points")
     print("points:",points)
     print("--------------------")
     return points
